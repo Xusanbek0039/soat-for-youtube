@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Creative UZ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link rel="icon" href="fav.ico">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('https://avatars.mds.yandex.net/i?id=94033a1bbd2942b6454f5689f0db8f37_l-6605286-images-thumbs&n=13');
+      background-size: cover;
+      background-position: center;
+      font-family: 'Orbitron', monospace;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .clock-container {
+      position: relative;
+      background-color: black;
+      border-radius: 1.5rem;
+      border: 1px solid #333;
+      padding: 2rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    }
+
+    .clock-content {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .days-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      color: #666;
+      font-size: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .day.active {
+      color: white;
+    }
+
+    .time-display {
+      display: flex;
+      align-items: center;
+    }
+
+    .time {
+      color: white;
+      font-size: 4.5rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+    }
+
+    .colon {
+      animation: blink 1s infinite;
+      margin: 0 0.25rem;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="clock-container">
+    <div class="clock-content">
+      <div class="days-column">
+        <div class="day" data-day="SUN">Dushanba</div>
+        <div class="day" data-day="MON">Seshanba</div>
+        <div class="day" data-day="TUE">Chorshanba</div>
+        <div class="day" data-day="WED">Payshanba</div>
+        <div class="day" data-day="THU">Juma</div>
+        <div class="day" data-day="FRI">Shanba</div>
+        <div class="day" data-day="SAT">Yakshanba</div>
+      </div>
+      <div class="time-display">
+        <div class="time">
+          <span id="hours">00</span><span class="colon">:</span><span id="minutes">00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const currentDay = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][now.getDay()];
+
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+
+      // Update active day
+      document.querySelectorAll('.day').forEach(day => {
+        if (day.dataset.day === currentDay) {
+          day.classList.add('active');
+        } else {
+          day.classList.remove('active');
+        }
+      });
+    }
+
+    // Update clock immediately and then every second
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
